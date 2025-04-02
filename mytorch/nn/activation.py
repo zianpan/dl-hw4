@@ -23,8 +23,11 @@ class Softmax:
         # TODO: Implement forward pass
         # Compute the softmax in a numerically stable way
         # Apply it to the dimension specified by the `dim` parameter
-        self.A = NotImplementedError
-        raise NotImplementedError
+        Z_max = np.max(Z, axis=self.dim, keepdims=True)
+        expZ = np.exp(Z - Z_max)
+        sum_expZ = np.sum(expZ, axis=self.dim, keepdims=True)
+        self.A = expZ / sum_expZ
+        return self.A
 
     def backward(self, dLdA):
         """
@@ -40,16 +43,18 @@ class Softmax:
            
         # Reshape input to 2D
         if len(shape) > 2:
-            self.A = NotImplementedError
-            dLdA = NotImplementedError
+            self.A =  np.moveaxis(self.A, self.dim, -1).reshape(-1, C)
+            dLdA = np.moveaxis(dLdA, self.dim, -1).reshape(-1, C)
+
+        dLdZ = self.A * dLdA - self.A * np.sum(self.A * dLdA, axis=1, keepdims=True)
 
         # Reshape back to original dimensions if necessary
         if len(shape) > 2:
             # Restore shapes to original
-            self.A = NotImplementedError
-            dLdZ = NotImplementedError
+            dLdZ = dLdZ.reshape(shape)
+            dLdZ = np.moveaxis(dLdZ, -1, self.dim)
 
-        raise NotImplementedError
+        return dLdZ
  
 
     

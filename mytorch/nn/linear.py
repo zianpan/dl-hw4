@@ -30,9 +30,13 @@ class Linear:
         # TODO: Implement forward pass
         
         # Store input for backward pass
-        self.A = A
-        
-        raise NotImplementedError
+
+        self.ori_shape = A.shape 
+        A_reshaped = A.reshape(-1, self.ori_shape[-1]) 
+        Z_reshaped = A_reshaped @ self.W.T + self.b  
+
+        self.A = A_reshaped
+        return Z_reshaped.reshape(*self.ori_shape[:-1], -1)
 
     def backward(self, dLdZ):
         """
@@ -40,12 +44,19 @@ class Linear:
         :return: Gradient of loss wrt input A (*, in_features)
         """
         # TODO: Implement backward pass
+        shape = self.ori_shape
+        N = np.prod(shape[:-1])
 
-        # Compute gradients (refer to the equations in the writeup)
-        self.dLdA = NotImplementedError
-        self.dLdW = NotImplementedError
-        self.dLdb = NotImplementedError
-        self.dLdA = NotImplementedError
+        dLdZ_reshaped = dLdZ.reshape(N, -1) 
+        A_reshaped = self.A
+        dLdA_reshaped = dLdZ_reshaped @ self.W 
+        dLdW = dLdZ_reshaped.T @ A_reshaped  
+        dLdb = np.sum(dLdZ_reshaped, axis=0) 
+        dLdA = dLdA_reshaped.reshape(*shape)
+
+        self.dLdA = dLdA
+        self.dLdW = dLdW
+        self.dLdb = dLdb
         
         # Return gradient of loss wrt input
-        raise NotImplementedError
+        return dLdA
