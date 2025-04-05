@@ -58,13 +58,11 @@ class LMTrainer(BaseTrainer):
         self.config = config
         self.run_name = run_name
         self.config_file = config_file
-        self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
         self.current_epoch = 0
         self.best_metric = None
         self.optimizer = None
         self.scheduler = None
         self.scaler = torch.cuda.amp.GradScaler()
-        self.model.to(self.device)
         self.criterion = nn.CrossEntropyLoss(ignore_index=tokenizer.pad_id, label_smoothing=self.config['loss']['label_smoothing'])
 
     def _train_epoch(self, dataloader) -> Tuple[Dict[str, float], Dict[str, torch.Tensor]]:
@@ -117,7 +115,8 @@ class LMTrainer(BaseTrainer):
             loss = raw_loss / self.config['training']['gradient_accumulation_steps']
             
             # TODO: Backpropagate the loss
-            loss.backward()
+            
+            self.scaler.scale(loss).backward()
 
             # Only update weights after accumulating enough gradients
             if (i + 1) % self.config['training']['gradient_accumulation_steps'] == 0:

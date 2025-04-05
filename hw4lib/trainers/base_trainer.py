@@ -87,6 +87,8 @@ class BaseTrainer(ABC):
         print(f"Using device: {device}")
         self.device = device
         self.model = model.to(self.device)
+        # for name, param in model.named_parameters():
+        #     print(f"{name}: {param.device}")
         self.tokenizer = tokenizer
         self.config = config
         

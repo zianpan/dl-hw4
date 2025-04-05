@@ -1,0 +1,14 @@
+.DS_Store
+hw4lib/__pycache__/
+hw4lib/data/__pycache__/
+hw4lib/decoding/__pycache__/
+hw4lib/model/__pycache__/
+hw4lib/trainers/__pycache__/
+hw4lib/utils/__pycache__/
+mytorch/__pycache__/
+mytorch/nn/__pycache__/
+tests/__pycache__/
+expts/
+handin.tar
+wandb/
+expts/

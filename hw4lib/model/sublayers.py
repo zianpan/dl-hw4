@@ -68,14 +68,23 @@ class SelfAttentionLayer(nn.Module):
         # TODO: Implement forward: Follow the figure in the writeup
         identity = x
 
-        # pre layer norm
+        # # pre layer norm
+        # print(x.device)
+        # print(identity.device)
+        # print(key_padding_mask.device)
+        # print(attn_mask.device)
+        # print("self.norm.weight.device:", self.norm.weight.device)
+        self.norm.to(x.device)
+        self.mha.to(x.device)
         x = self.norm(x)  
-        
+        # print('after norm')
+        # print(x.device)
         # TODO: Self-attention
         # Be sure to use the correct arguments for the multi-head attention layer
         # Set need_weights to True and average_attn_weights to True so we can get the attention weights 
         x, mha_attn_weights = self.mha(x, x, x, key_padding_mask=key_padding_mask, attn_mask=attn_mask, need_weights=True)
-        
+        # print('after mha')
+        # print(mha_attn_weights.device)
         # NOTE: For some regularization you can apply dropout and then add residual connection
         x = self.dropout(x)
         x = x + identity
@@ -220,7 +229,9 @@ class FeedForwardLayer(nn.Module):
 
         # NOTE: For some regularization you can apply dropout to the output of the feed-forward network before adding the residual connection
         identity = x
+        self.norm.to(x.device)
         x = self.norm(x)
+        self.ffn.to(x.device)
         x = self.ffn(x)
         x = self.dropout(x)
         x = x + identity

@@ -160,9 +160,13 @@ class DecoderOnlyTransformer(nn.Module):
         pad_mask_dec = None
         if target_lengths is not None:
             pad_mask_dec = PadMask(padded_targets, target_lengths).to(padded_targets.device)
+        # print("pad_mask_dec")
+        # print(pad_mask_dec.device)
         
         # TODO: Create causal mask to prevent attending to future tokens on the same device as the input (use CausalMask)
         causal_mask = CausalMask(padded_targets).to(padded_targets.device)
+        # print('causal_mask')
+        # print(causal_mask.device)
 
         # TODO: Apply the embedding
         x = self.target_embedding(padded_targets)
@@ -176,10 +180,13 @@ class DecoderOnlyTransformer(nn.Module):
         for i in range(self.num_layers):
             # Optionally apply LayerDrop during training (More regularization!)
             if self.training and self.layer_drop_rate > 0 and random.random() < self.layer_drop_rate:
+                
                 continue
             
             # TODO: Pass through decoder layer
             x, attention = self.dec_layers[i](x, pad_mask_dec, causal_mask)
+            # print('attention')
+            # print(attention.device)
             
             # TODO: Save attention weights  
             running_att['layer{}_dec_self'.format(i + 1)] = attention
