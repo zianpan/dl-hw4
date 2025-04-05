@@ -53,8 +53,19 @@ class LMTrainer(BaseTrainer):
         # TODO: Initialize the criterion
         # How would you set the ignore_index? 
         # Use value in config to set the label_smoothing argument
+        self.model = model
+        self.tokenizer = tokenizer
+        self.config = config
+        self.run_name = run_name
+        self.config_file = config_file
+        self.device = device if device else torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+        self.current_epoch = 0
+        self.best_metric = None
+        self.optimizer = None
+        self.scheduler = None
+        self.scaler = None
         self.criterion = nn.CrossEntropyLoss(ignore_index=tokenizer.pad_id, label_smoothing=self.config['loss']['label_smoothing'])
-        
+
     def _train_epoch(self, dataloader) -> Tuple[Dict[str, float], Dict[str, torch.Tensor]]:
         """
         Train for one epoch.
@@ -94,7 +105,6 @@ class LMTrainer(BaseTrainer):
                 # What is the shape of raw_preds and targets_golden? 
                 # Would you need to change the shape of the inputs to the criterion?
                 # Hint: See the documentation for CrossEntropyLoss
-                raw_loss = self.criterion(raw_preds, targets_golden, lengths)
                 raw_loss = self.criterion(
                                         raw_preds.contiguous().view(-1, raw_preds.shape[-1]),
                                         targets_golden.contiguous().view(-1)

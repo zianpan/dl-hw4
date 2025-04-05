@@ -1,6 +1,5 @@
 
 Name                      : "Zian Pan"
-
 ###### Tokenization ------------------------------------------------------------
 tokenization:
   token_type                : "char"       # [char, 1k, 5k, 10k]
@@ -12,32 +11,32 @@ tokenization:
 
 ###### Dataset -----------------------------------------------------------------
 data:                    # Currently setup for Colab assuming out setup
-  root                 : "hw4_data/hw4p1_data"  # TODO: Set the root path of your data
+  root                 : "hw4_data_subset/hw4p1_data"  # TODO: Set the root path of your data
   train_partition      : "train"  # train
   val_partition        : "val"    # val
   test_partition       : "test"   # test
   subset               : 1.0      # Load a subset of the data (for debugging, testing, etc
-  batch_size           : 256      #
-  NUM_WORKERS          : 2        # Set to 0 for CPU
+  batch_size           : 64       # 128 / 256 / 64
+  NUM_WORKERS          : 0        # Set to 0 for CPU
 
 ###### Network Specs -------------------------------------------------------------
 model: # Decoder-Only Language Model (HW4P1)
-  d_model                   : 256
+  d_model                   : 512
   d_ff                      : 1024
-  num_layers                : 2
-  num_heads                 : 2
-  dropout                   : 0.0
-  layer_drop_rate           : 0.0
-  weight_tying              : False
+  num_layers                : 4
+  num_heads                 : 8
+  dropout                   : 0.2
+  layer_drop_rate           : 0.1
+  weight_tying              : True
 
 ###### Common Training Parameters ------------------------------------------------
 training:
   use_wandb                   : True   # Toggle wandb logging
   wandb_run_id                : "none" # "none" or "run_id"
   resume                      : False  # Resume an existing run (run_id != 'none')
-  epochs                      : 20
+  epochs                      : 70
   gradient_accumulation_steps : 1
-  wandb_project               : "Set-Project-Name-Here" # wandb project to log to
+  wandb_project               : "idls25-hw4p1" # wandb project to log to
 
 ###### Loss ----------------------------------------------------------------------
 loss: # Just good ol' CrossEntropy
@@ -45,8 +44,8 @@ loss: # Just good ol' CrossEntropy
 
 ###### Optimizer -----------------------------------------------------------------
 optimizer:
-  name: "adam" # Options: sgd, adam, adamw
-  lr: 5.0e-4   # Base learning rate
+  name: "adamw" # Options: sgd, adam, adamw
+  lr: 3.0e-4   # Base learning rate
 
   # Common parameters
   weight_decay: 0.0001
@@ -107,8 +106,8 @@ scheduler:
 
   # CosineAnnealingLR specific parameters
   cosine:
-    T_max: 15  # Maximum number of iterations
-    eta_min: 1.0e-8  # Minimum learning rate
+    T_max: 65  # Maximum number of iterations
+    eta_min: 1.0e-6  # Minimum learning rate
     last_epoch: -1
 
   # CosineAnnealingWarmRestarts specific parameters
@@ -123,5 +122,5 @@ scheduler:
     enabled: True
     type: "exponential"  # Options: linear, exponential
     epochs: 5
-    start_factor: 0.1
+    start_factor: 0.01
     end_factor: 1.0

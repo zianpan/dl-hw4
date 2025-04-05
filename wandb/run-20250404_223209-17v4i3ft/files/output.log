@@ -37,4 +37,181 @@
 │   ├── Duration: 5 epochs (10 steps)
 │   ├── Start Factor: 0.1
 │   └── End Factor: 1.0
+100%|██████████| 267/267 [00:00<00:00, 4057.21it/s]]
+[{"variableName": "config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "golden_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "model_config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "shifted_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "transcript_lengths", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}]
+[{"variableName": "config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "golden_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "model_config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "shifted_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "transcript_lengths", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}]
+[{"variableName": "config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "golden_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "model_config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "shifted_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "transcript_lengths", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}]
+Overwriting config.yaml
+================================================================================
+                         Tokenizer Configuration (char)
+--------------------------------------------------------------------------------
+Vocabulary size:     35
+
+Special Tokens:
+PAD:              0
+UNK:              1
+MASK:             2
+SOS:              3
+EOS:              4
+BLANK:            5
+
+Validation Example:
+--------------------------------------------------------------------------------
+Input text:  [SOS]HI DEEP LEARNERS[EOS]
+Tokens:      ['[SOS]', 'H', 'I', ' ', 'D', 'E', 'E', 'P', ' ', 'L', 'E', 'A', 'R', 'N', 'E', 'R', 'S', '[EOS]']
+Token IDs:   [3, 13, 12, 6, 16, 7, 7, 25, 6, 17, 7, 9, 15, 11, 7, 15, 14, 4]
+Decoded:     [SOS]HI DEEP LEARNERS[EOS]
+================================================================================
+Loading transcripts for train partition...
+100%|██████████| 7/7 [00:00<00:00, 3990.77it/s]
+Loading transcripts for val partition...
+100%|██████████| 7/7 [00:00<00:00, 4260.65it/s]
+Loading transcripts for test partition...
+100%|██████████| 267/267 [00:00<00:00, 3023.95it/s]
+Using device: cpu
+Overwriting config.yaml
+================================================================================
+                         Tokenizer Configuration (char)
+--------------------------------------------------------------------------------
+Vocabulary size:     35
+
+Special Tokens:
+PAD:              0
+UNK:              1
+MASK:             2
+SOS:              3
+EOS:              4
+BLANK:            5
+
+Validation Example:
+--------------------------------------------------------------------------------
+Input text:  [SOS]HI DEEP LEARNERS[EOS]
+Tokens:      ['[SOS]', 'H', 'I', ' ', 'D', 'E', 'E', 'P', ' ', 'L', 'E', 'A', 'R', 'N', 'E', 'R', 'S', '[EOS]']
+Token IDs:   [3, 13, 12, 6, 16, 7, 7, 25, 6, 17, 7, 9, 15, 11, 7, 15, 14, 4]
+Decoded:     [SOS]HI DEEP LEARNERS[EOS]
+================================================================================
+Loading transcripts for train partition...
+100%|██████████| 7/7 [00:00<00:00, 4143.98it/s]
+Loading transcripts for val partition...
+100%|██████████| 7/7 [00:00<00:00, 4358.69it/s]
+Loading transcripts for test partition...
+  0%|          | 0/7 [00:00<?, ?it/s]
+==================================================
+             Dataloader Verification
+==================================================
+Dataloader Partition     : train
+--------------------------------------------------
+Number of Batches        : 2
+Batch Size               : 256
+--------------------------------------------------
+Checking shapes of the data...
+
+Shifted Transcript Shape : [256, 260]
+Golden Transcript Shape  : [256, 260]
+Transcript Lengths Shape : [256]
+--------------------------------------------------
+Max Transcript Length    : 260
+Avg. Chars per Token     : 1.00
+==================================================
+==================================================
+             Dataloader Verification
+==================================================
+Dataloader Partition     : val
+--------------------------------------------------
+Number of Batches        : 1
+Batch Size               : 256
+--------------------------------------------------
+Checking shapes of the data...
+
+Shifted Transcript Shape : [7, 235]
+Golden Transcript Shape  : [7, 235]
+Transcript Lengths Shape : [7]
+--------------------------------------------------
+Max Transcript Length    : 235
+Avg. Chars per Token     : 1.00
+==================================================
+==================================================
+             Dataloader Verification
+==================================================
+Dataloader Partition     : test
+--------------------------------------------------
+Number of Batches        : 1
+Batch Size               : 256
+--------------------------------------------------
+Checking shapes of the data...
+
+Shifted Transcript Shape : [7, 211]
+Golden Transcript Shape  : [7, 211]
+Transcript Lengths Shape : [7]
+--------------------------------------------------
+Max Transcript Length    : 211
+Avg. Chars per Token     : 1.00
+==================================================
+==================================================
+Global Max Transcript Length   : 260
+==================================================
+[{"variableName": "config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "golden_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "model_config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "shifted_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "transcript_lengths", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}]
+Shape of shifted_transcripts :  torch.Size([256, 260])
+Shape of golden_transcripts  :  torch.Size([256, 260])
+Shape of transcript_lengths  :  torch.Size([256])
+==========================================================================================
+Layer (type:depth-idx)                   Output Shape              Param #
+==========================================================================================
+DecoderOnlyTransformer                   [256, 260, 35]            --
+├─Embedding: 1-1                         [256, 260, 256]           8,960
+├─PositionalEncoding: 1-2                [256, 260, 256]           --
+├─Dropout: 1-3                           [256, 260, 256]           --
+├─LayerNorm: 1-4                         [256, 260, 256]           512
+├─Linear: 1-5                            [256, 260, 35]            8,995
+==========================================================================================
+Total params: 18,467
+Trainable params: 18,467
+Non-trainable params: 0
+Total mult-adds (Units.MEGABYTES): 4.73
+==========================================================================================
+Input size (MB): 0.53
+Forward/backward pass size (MB): 291.27
+Params size (MB): 0.07
+Estimated Total Size (MB): 291.88
+==========================================================================================
+[{"variableName": "config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "golden_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "model_config", "type": "dictionary", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "builtins.dict"}, {"variableName": "shifted_transcripts", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}, {"variableName": "transcript_lengths", "type": "tensor", "supportedEngines": ["pandas"], "isLocalVariable": false, "rawType": "torch.Tensor"}]
+Using device: cpu
+
+🔧 Configuring Optimizer:
+├── Type: ADAM
+├── Base LR: 0.0005
+├── Weight Decay: 0.0001
+├── Parameter Groups:
+│   ├── Group: self_attn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   ├── Group: ffn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   └── Default Group (unmatched parameters)
+└── Adam Specific:
+    ├── Betas: [0.9, 0.999]
+    ├── Epsilon: 1e-08
+    └── AMSGrad: False
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (30 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (10 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (30 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (10 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
 [Training LM]:   0%|          | 0/2 [00:00<?, ?it/s]
