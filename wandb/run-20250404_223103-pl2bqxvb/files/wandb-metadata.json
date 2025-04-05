@@ -1,0 +1,44 @@
+{
+  "os":  "macOS-15.0.1-arm64-arm-64bit",
+  "python":  "CPython 3.12.4",
+  "startedAt":  "2025-04-05T02:31:03.933352Z",
+  "program":  "/Users/panzian/Desktop/11785-idl/hw4/dl-hw4/HW4P1_nb.ipynb",
+  "codePath":  "HW4P1_nb.ipynb",
+  "git":  {
+    "remote":  "git@github.com:zianpan/dl-hw4.git",
+    "commit":  "e8cfc657687d95bc37058b083fb222a5d3af987e"
+  },
+  "email":  "zianp@andrew.cmu.edu",
+  "root":  "/Users/panzian/Desktop/11785-idl/hw4/dl-hw4",
+  "host":  "Zians-MacBook-Air.local",
+  "executable":  "/opt/miniconda3/envs/hw4/bin/python",
+  "codePathLocal":  "HW4P1_nb.ipynb",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "446002012160"
+    },
+    "/System/Volumes/Data":  {
+      "total":  "494384795648",
+      "used":  "446002012160"
+    }
+  },
+  "memory":  {
+    "total":  "25769803776"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  },
+  "apple":  {
+    "name":  "Apple M3",
+    "ecpuCores":  4,
+    "pcpuCores":  4,
+    "gpuCores":  10,
+    "memoryGb":  24,
+    "swapTotalBytes":  "6442450944",
+    "ramTotalBytes":  "25769803776"
+  }
+}

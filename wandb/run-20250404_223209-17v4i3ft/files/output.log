@@ -1,0 +1,40 @@
+
+🔧 Configuring Optimizer:
+├── Type: ADAM
+├── Base LR: 0.0005
+├── Weight Decay: 0.0001
+├── Parameter Groups:
+│   ├── Group: self_attn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   ├── Group: ffn
+│   │   ├── LR: 0.0001
+│   │   └── Patterns: []
+│   └── Default Group (unmatched parameters)
+└── Adam Specific:
+    ├── Betas: [0.9, 0.999]
+    ├── Epsilon: 1e-08
+    └── AMSGrad: False
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (30 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (10 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+/opt/miniconda3/envs/hw4/lib/python3.12/site-packages/torch/optim/lr_scheduler.py:240: UserWarning: The epoch parameter in `scheduler.step()` was not necessary and is being deprecated where possible. Please use `scheduler.step()` to step the scheduler. During the deprecation, if epoch is different from None, the closed form is used instead of the new chainable form, where available. Please open an issue if you are unable to replicate your use case: https://github.com/pytorch/pytorch/issues/new/choose.
+  warnings.warn(EPOCH_DEPRECATION_WARNING, UserWarning)
+
+📈 Configuring Learning Rate Scheduler:
+├── Type: COSINE
+├── Cosine Annealing Settings:
+│   ├── T_max: 15 epochs (30 steps)
+│   └── Min LR: 1e-08
+├── Warmup Settings:
+│   ├── Duration: 5 epochs (10 steps)
+│   ├── Start Factor: 0.1
+│   └── End Factor: 1.0
+[Training LM]:   0%|          | 0/2 [00:00<?, ?it/s]
