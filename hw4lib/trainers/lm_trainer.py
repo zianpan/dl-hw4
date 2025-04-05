@@ -63,7 +63,8 @@ class LMTrainer(BaseTrainer):
         self.best_metric = None
         self.optimizer = None
         self.scheduler = None
-        self.scaler = None
+        self.scaler = torch.cuda.amp.GradScaler()
+        self.model.to(self.device)
         self.criterion = nn.CrossEntropyLoss(ignore_index=tokenizer.pad_id, label_smoothing=self.config['loss']['label_smoothing'])
 
     def _train_epoch(self, dataloader) -> Tuple[Dict[str, float], Dict[str, torch.Tensor]]:
@@ -105,10 +106,7 @@ class LMTrainer(BaseTrainer):
                 # What is the shape of raw_preds and targets_golden? 
                 # Would you need to change the shape of the inputs to the criterion?
                 # Hint: See the documentation for CrossEntropyLoss
-                raw_loss = self.criterion(
-                                        raw_preds.contiguous().view(-1, raw_preds.shape[-1]),
-                                        targets_golden.contiguous().view(-1)
-                )
+                raw_loss = self.criterion(raw_preds.reshape(-1, raw_preds.shape[-1]), targets_golden.reshape(-1))
                 
             # Calculate metrics with raw loss (DO NOT MODIFY THIS)
             batch_tokens = lengths.sum().item()
@@ -119,8 +117,8 @@ class LMTrainer(BaseTrainer):
             loss = raw_loss / self.config['training']['gradient_accumulation_steps']
             
             # TODO: Backpropagate the loss
-            self.scaler = torch.cuda.amp.GradScaler()
-        
+            loss.backward()
+
             # Only update weights after accumulating enough gradients
             if (i + 1) % self.config['training']['gradient_accumulation_steps'] == 0:
                 self.scaler.step(self.optimizer)
