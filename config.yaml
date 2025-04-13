@@ -16,17 +16,17 @@ data:                    # Currently setup for Colab assuming out setup
   val_partition        : "val"    # val
   test_partition       : "test"   # test
   subset               : 1.0      # Load a subset of the data (for debugging, testing, etc
-  batch_size           : 64       # 128 / 256 / 64
+  batch_size           : 128       # 128 / 256 / 64
   NUM_WORKERS          : 4        # Set to 0 for CPU
 
 ###### Network Specs -------------------------------------------------------------
 model: # Decoder-Only Language Model (HW4P1)
-  d_model                   : 256
-  d_ff                      : 256
+  d_model                   : 512
+  d_ff                      : 1024
   num_layers                : 4
-  num_heads                 : 4
-  dropout                   : 0.3
-  layer_drop_rate           : 0.2
+  num_heads                 : 8
+  dropout                   : 0.2
+  layer_drop_rate           : 0.1
   weight_tying              : True
 
 ###### Common Training Parameters ------------------------------------------------
@@ -34,19 +34,19 @@ training:
   use_wandb                   : True   # Toggle wandb logging
   wandb_run_id                : "none" # "none" or "run_id"
   resume                      : False  # Resume an existing run (run_id != 'none')
-  epochs                      : 50
+  epochs                      : 25
   gradient_accumulation_steps : 1
   wandb_project               : "hw4p1-train" # wandb project to log to
-  run_name                    : "full_ds_t1" # wandb run name
+  run_name                    : "full_ds_t2" # wandb run name
 
 ###### Loss ----------------------------------------------------------------------
 loss: # Just good ol' CrossEntropy
-  label_smoothing: 0.2
+  label_smoothing: 0.0
 
 ###### Optimizer -----------------------------------------------------------------
 optimizer:
   name: "adamw" # Options: sgd, adam, adamw
-  lr: 3.0e-4   # Base learning rate
+  lr: 5.0e-4   # Base learning rate
 
   # Common parameters
   weight_decay: 0.0001
@@ -69,7 +69,7 @@ optimizer:
 
   # Layer-wise learning rates
   layer_decay:
-    enabled: True
+    enabled: False
     decay_rate: 0.75
 
   # SGD specific parameters
@@ -92,7 +92,7 @@ optimizer:
 
 ###### Scheduler -----------------------------------------------------------------
 scheduler:
-  name: "reduce_lr"  # Options: reduce_lr, cosine, cosine_warm
+  name: "cosine"  # Options: reduce_lr, cosine, cosine_warm
 
   # ReduceLROnPlateau specific parameters
   reduce_lr:
@@ -107,7 +107,7 @@ scheduler:
 
   # CosineAnnealingLR specific parameters
   cosine:
-    T_max: 50  # Maximum number of iterations
+    T_max: 22  # Maximum number of iterations
     eta_min: 1.0e-6  # Minimum learning rate
     last_epoch: -1
 
@@ -120,8 +120,8 @@ scheduler:
 
   # Warmup parameters (can be used with any scheduler)
   warmup:
-    enabled: False
+    enabled: True
     type: "linear"  # Options: linear, exponential
-    epochs: 10
-    start_factor: 0.001
+    epochs: 3
+    start_factor: 0.01
     end_factor: 1.0
