@@ -40,7 +40,7 @@ class SelfAttentionLayer(nn.Module):
             dropout (float): The dropout rate.
         '''
         super().__init__()
-        # TODO: Implement __init__
+        # : Implement __init__
         
         # TODO: Initialize the multi-head attention mechanism (use nn.MultiheadAttention)
         self.mha = nn.MultiheadAttention(embed_dim=d_model, num_heads=num_heads, batch_first=True)
@@ -74,8 +74,6 @@ class SelfAttentionLayer(nn.Module):
         # print(key_padding_mask.device)
         # print(attn_mask.device)
         # print("self.norm.weight.device:", self.norm.weight.device)
-        self.norm.to(x.device)
-        self.mha.to(x.device)
         x = self.norm(x)  
         # print('after norm')
         # print(x.device)
@@ -229,9 +227,7 @@ class FeedForwardLayer(nn.Module):
 
         # NOTE: For some regularization you can apply dropout to the output of the feed-forward network before adding the residual connection
         identity = x
-        self.norm.to(x.device)
         x = self.norm(x)
-        self.ffn.to(x.device)
         x = self.ffn(x)
         x = self.dropout(x)
         x = x + identity

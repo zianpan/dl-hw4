@@ -124,5 +124,4 @@ class CrossAttentionDecoderLayer(nn.Module):
 
         # TODO: Return the output tensor and attention weights    
         return x, self_attn_weights, cross_attn_weights
-        raise NotImplementedError # Remove once implemented
 ## -------------------------------------------------------------------------------------------------    
