@@ -198,10 +198,13 @@ trainer = ASRTrainer(
     model=model,
     tokenizer=Tokenizer,
     config=config,
-    run_name=config['training']['run_name'],
+    run_name="p2-complex-t1",
     config_file="config.yaml",
     device=device
 )
+
+checkpoint_path = "/root/hw4/dl-hw4/expts/p2-complex-t1/checkpoints/checkpoint-best-metric-model.pth"
+trainer.load_checkpoint(checkpoint_path)
 
 # %% [markdown]
 # ### Setup Optimizer and Scheduler
@@ -225,6 +228,8 @@ trainer.optimizer = create_optimizer(
     opt_config=config['optimizer']
 )
 
+# trainer.optimizer = optim.AdamW(model.parameters(), lr=config['optimizer']['lr'], weight_decay=config['optimizer']['weight_decay'])
+# trainer.scheduler = optim.lr_scheduler.CosineAnnealingLR(trainer.optimizer, T_max=config['training']['epochs'])
 # %% [markdown]
 # #### Creating a test scheduler and plotting the learning rate schedule
 
@@ -236,12 +241,6 @@ test_scheduler = create_scheduler(
     gradient_accumulation_steps=config['training']['gradient_accumulation_steps']
 )
 
-plot_lr_schedule(
-    scheduler=test_scheduler,
-    num_epochs=20,
-    train_loader=train_loader,
-    gradient_accumulation_steps=config['training']['gradient_accumulation_steps']
-)
 
 # %% [markdown]
 # #### Setting up the scheduler
@@ -261,7 +260,7 @@ torch.cuda.empty_cache()
 import gc
 gc.collect()
 # %%
-trainer.train(train_loader, val_loader, epochs=config['training']["epochs"])
+# trainer.train(train_loader, val_loader, epochs=config['training']["epochs"])
 
 # %% [markdown]
 # #### Inference
@@ -275,7 +274,7 @@ recognition_config = {
     'repeat_penalty': 1.0,
     'lm_weight': None,
     'lm_model': None,
-    'beam_width': 1, # Beam width of 1 reverts to greedy
+    'beam_width': 6, # Beam width of 1 reverts to greedy
 }
 
 # Recognize with the shallow fusion config

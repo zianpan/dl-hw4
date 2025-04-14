@@ -16,9 +16,9 @@ data:
   train_partition      : "train-clean-100"  # paired text-speech for ASR pre-training
   val_partition        : "dev-clean"        # paired text-speech for ASR pre-training
   test_partition       : "test-clean"       # paired text-speech for ASR pre-training
-  subset               : 1                # Load a subset of the data (for debugging, testing, etc
-  batch_size           : 32           #
-  NUM_WORKERS          : 8            # Set to 0 for CPU
+  subset               : 1.0                # Load a subset of the data (for debugging, testing, etc
+  batch_size           : 128           #
+  NUM_WORKERS          : 16            # Set to 0 for CPU
   norm                 : 'global_mvn' # ['global_mvn', 'cepstral', 'none']
   num_feats            : 80
 
@@ -27,10 +27,10 @@ data:
   specaug_conf:
     apply_freq_mask         : True
     freq_mask_width_range   : 5
-    num_freq_mask           : 2
+    num_freq_mask           : 3
     apply_time_mask         : True
     time_mask_width_range   : 40
-    num_time_mask           : 2
+    num_time_mask           : 3
 
 ###### Network Specs -------------------------------------------------------------
 model: # Encoder-Decoder Transformer (HW4P2)
@@ -40,18 +40,18 @@ model: # Encoder-Decoder Transformer (HW4P2)
   reduction_method: 'lstm'   # The source_embedding reduction method ['lstm', 'conv', 'both']
 
   # Architecture parameters
-  d_model: 384           # Model dimension
-  num_encoder_layers: 11  # Number of encoder layers
-  num_decoder_layers: 2 # Number of decoder layers
-  num_encoder_heads: 6   # Number of encoder attention heads
-  num_decoder_heads: 4   # Number of decoder attention heads
-  d_ff_encoder: 768     # Feed-forward dimension for encoder
-  d_ff_decoder: 768     # Feed-forward dimension for decoder
+  d_model: 400           # Model dimension
+  num_encoder_layers: 4  # Number of encoder layers
+  num_decoder_layers: 4  # Number of decoder layers
+  num_encoder_heads: 8   # Number of encoder attention heads
+  num_decoder_heads: 8   # Number of decoder attention heads
+  d_ff_encoder: 1200     # Feed-forward dimension for encoder
+  d_ff_decoder: 1200     # Feed-forward dimension for decoder
   skip_encoder_pe: False # Whether to skip positional encoding for encoder
   skip_decoder_pe: False # Whether to skip positional encoding for decoder
 
   # Common parameters
-  dropout: 0.2          # Dropout rate
+  dropout: 0.2        # Dropout rate
   layer_drop_rate: 0.1  # Layer dropout rate
   weight_tying: False   # Whether to use weight tying
 
@@ -62,7 +62,8 @@ training:
   resume                      : True   # Resume an existing run (run_id != 'none')
   gradient_accumulation_steps : 1
   wandb_project               : "hw4p2-ablation" # wandb project to log to
-  epochs                    : 60
+  epochs                      : 120
+  run_name                    : "wide_transformer_specaug" # Name of the run
 
 ###### Loss ----------------------------------------------------------------------
 loss: # Just good ol' CrossEntropy
@@ -72,7 +73,7 @@ loss: # Just good ol' CrossEntropy
 ###### Optimizer -----------------------------------------------------------------
 optimizer:
   name: "adamw" # Options: sgd, adam, adamw
-  lr: 0.0004    # Base learning rate
+  lr: 0.0005    # Base learning rate
 
   # Common parameters
   weight_decay: 0.000001
@@ -135,7 +136,7 @@ scheduler:
   # CosineAnnealingLR specific parameters
   cosine:
     T_max: 55  # Maximum number of iterations
-    eta_min: 0.0000001  # Minimum learning rate
+    eta_min: 0.0000001  # Minimum learning rate. 1e-6
     last_epoch: -1
 
   # CosineAnnealingWarmRestarts specific parameters
