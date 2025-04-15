@@ -203,7 +203,7 @@ trainer = ASRTrainer(
     device=device
 )
 
-checkpoint_path = "/root/hw4/dl-hw4/expts/p2-complex-t1/checkpoints/checkpoint-best-metric-model.pth"
+checkpoint_path = "/root/hw4/dl-hw4/expts/deeper_transformer_specaug/checkpoints/checkpoint-best-metric-model.pth"
 trainer.load_checkpoint(checkpoint_path)
 
 # %% [markdown]
