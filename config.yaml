@@ -17,8 +17,8 @@ data:
   val_partition        : "dev-clean"        # paired text-speech for ASR pre-training
   test_partition       : "test-clean"       # paired text-speech for ASR pre-training
   subset               : 1.0                # Load a subset of the data (for debugging, testing, etc
-  batch_size           : 16           #
-  NUM_WORKERS          : 8            # Set to 0 for CPU
+  batch_size           : 32           #
+  NUM_WORKERS          : 25            # Set to 0 for CPU
   norm                 : 'global_mvn' # ['global_mvn', 'cepstral', 'none']
   num_feats            : 80
 
@@ -26,11 +26,11 @@ data:
   specaug                   : True  # Set to True if you want to use SpecAugment
   specaug_conf:
     apply_freq_mask         : True
-    freq_mask_width_range   : 5
-    num_freq_mask           : 2
+    freq_mask_width_range   : 10
+    num_freq_mask           : 4
     apply_time_mask         : True
     time_mask_width_range   : 40
-    num_time_mask           : 2
+    num_time_mask           : 4
 
 ###### Network Specs -------------------------------------------------------------
 model: # Encoder-Decoder Transformer (HW4P2)
@@ -51,7 +51,7 @@ model: # Encoder-Decoder Transformer (HW4P2)
   skip_decoder_pe: False # Whether to skip positional encoding for decoder
 
   # Common parameters
-  dropout: 0.2        # Dropout rate
+  dropout: 0.3        # Dropout rate
   layer_drop_rate: 0.1  # Layer dropout rate
   weight_tying: False   # Whether to use weight tyingscr
 
@@ -60,10 +60,10 @@ training:
   use_wandb                   : True   # Toggle wandb logging
   wandb_run_id                : "none" # "none" or "run_id"
   resume                      : True   # Resume an existing run (run_id != 'none')
-  gradient_accumulation_steps : 2
+  gradient_accumulation_steps : 1
   wandb_project               : "hw4p2-ablation" # wandb project to log to
-  epochs                      : 60
-  run_name                    : "deeper_transformer_specaug_2_smaller_bs_more_grad_acu" # Name of the run
+  epochs                      : 120
+  run_name                    : "deeper_transformer_morespecaug_dropout0.3_exp" # Name of the run
 
 ###### Loss ----------------------------------------------------------------------
 loss: # Just good ol' CrossEntropy
@@ -135,8 +135,8 @@ scheduler:
 
   # CosineAnnealingLR specific parameters
   cosine:
-    T_max: 58  # Maximum number of iterations
-    eta_min: 0.00001  # Minimum learning rate. 1e-6
+    T_max: 120  # Maximum number of iterations
+    eta_min: 0.000001  # Minimum learning rate. 1e-6
     last_epoch: -1
 
   # CosineAnnealingWarmRestarts specific parameters
@@ -150,6 +150,6 @@ scheduler:
   warmup:
     enabled: True
     type: "linear"  # Options: linear, exponential
-    epochs: 2
+    epochs: 10
     start_factor: 0.1
     end_factor: 1.0

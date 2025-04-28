@@ -203,7 +203,7 @@ trainer = ASRTrainer(
     device=device
 )
 
-checkpoint_path = "/root/hw4/dl-hw4/expts/deeper_transformer_specaug/checkpoints/checkpoint-best-metric-model.pth"
+checkpoint_path = "/root/hw4/dl-hw4/expts/deeper_transformer_morespecaug_dropout0.3/checkpoints/checkpoint-best-metric-model.pth"
 trainer.load_checkpoint(checkpoint_path)
 
 # %% [markdown]
@@ -274,7 +274,7 @@ recognition_config = {
     'repeat_penalty': 1.0,
     'lm_weight': None,
     'lm_model': None,
-    'beam_width': 6, # Beam width of 1 reverts to greedy
+    'beam_width': 1, # Beam width of 1 reverts to greedy
 }
 
 # Recognize with the shallow fusion config
@@ -318,7 +318,7 @@ results_df.head()
 # ### Submit
 
 # %%
-results_df.to_csv("results.csv", index=False)
+results_df.to_csv("results_beam2.csv", index=False)
 # !kaggle competitions submit -c 11785-s25-hw4p2-asr -f results.csv -m "My Submission"
 
 # %%
